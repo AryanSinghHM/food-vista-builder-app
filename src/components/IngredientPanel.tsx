@@ -16,6 +16,7 @@ interface Ingredient {
 interface IngredientPanelProps {
   selectedIngredients: string[];
   onIngredientToggle: (ingredient: string) => void;
+  onIngredientRemove: (ingredient: string) => void;
   onAddToCart: () => void;
 }
 
@@ -30,7 +31,7 @@ const availableIngredients: Ingredient[] = [
   { id: 'sauce', name: 'Special Sauce', category: 'Condiments', price: 0.50, emoji: '🥫' },
 ];
 
-export const IngredientPanel = ({ selectedIngredients, onIngredientToggle, onAddToCart }: IngredientPanelProps) => {
+export const IngredientPanel = ({ selectedIngredients, onIngredientToggle, onIngredientRemove, onAddToCart }: IngredientPanelProps) => {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
   const categories = ['Base', 'Protein', 'Dairy', 'Vegetables', 'Condiments'];
@@ -40,17 +41,10 @@ export const IngredientPanel = ({ selectedIngredients, onIngredientToggle, onAdd
   };
 
   const updateQuantity = (ingredientId: string, change: number) => {
-    const currentQty = getIngredientQuantity(ingredientId);
-    const newQty = Math.max(0, currentQty + change);
-    
     if (change > 0) {
       onIngredientToggle(ingredientId);
-    } else if (change < 0 && currentQty > 0) {
-      const index = selectedIngredients.findIndex(id => id === ingredientId);
-      if (index !== -1) {
-        const newIngredients = [...selectedIngredients];
-        newIngredients.splice(index, 1);
-      }
+    } else if (change < 0) {
+      onIngredientRemove(ingredientId);
     }
   };
 

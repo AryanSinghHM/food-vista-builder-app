@@ -16,9 +16,26 @@ export const FoodCustomizer = () => {
     });
   };
 
+  const handleIngredientRemove = (ingredient: string) => {
+    setSelectedIngredients(prev => {
+      const index = prev.findIndex(item => item === ingredient);
+      if (index !== -1) {
+        const newIngredients = [...prev];
+        newIngredients.splice(index, 1);
+        return newIngredients;
+      }
+      return prev;
+    });
+    toast(`Removed ${ingredient} from your burger!`, {
+      description: "See the change in your 3D model",
+    });
+  };
+
   const handleIngredientClick = (ingredient: string) => {
-    toast(`Clicked on ${ingredient}!`, {
-      description: "You can remove ingredients by clicking them in 3D view",
+    // Remove ingredient when clicked in 3D view
+    handleIngredientRemove(ingredient);
+    toast(`Removed ${ingredient} by clicking!`, {
+      description: "Click ingredients in 3D view to remove them",
     });
   };
 
@@ -83,6 +100,7 @@ export const FoodCustomizer = () => {
             <IngredientPanel
               selectedIngredients={selectedIngredients}
               onIngredientToggle={handleIngredientToggle}
+              onIngredientRemove={handleIngredientRemove}
               onAddToCart={handleAddToCart}
             />
           </div>
