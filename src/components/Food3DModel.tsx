@@ -7,7 +7,7 @@ interface Food3DModelProps {
   onIngredientClick?: (ingredient: string) => void;
 }
 
-export const Food3DModel = ({ ingredients, onIngredientClick }: Food3DModelProps) => {
+export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClick }: Food3DModelProps) => {
   const groupRef = useRef<any>();
   const [hovered, setHovered] = useState<string | null>(null);
 
@@ -31,49 +31,79 @@ export const Food3DModel = ({ ingredients, onIngredientClick }: Food3DModelProps
     return colors[ingredient] || '#888888';
   };
 
-  const getIngredientPosition = (ingredient: string, index: number) => {
-    const positions: Record<string, [number, number, number]> = {
-      'dough': [0, -0.4 + index * 0.05, 0],
-      'sauce': [0, -0.35 + index * 0.05, 0],
-      'cheese': [0, -0.3 + index * 0.05, 0],
-      'pepperoni': [0, -0.25 + index * 0.05, 0],
-      'mushrooms': [0, -0.2 + index * 0.05, 0],
-      'peppers': [0, -0.15 + index * 0.05, 0],
-      'olives': [0, -0.1 + index * 0.05, 0],
-      'basil': [0, -0.05 + index * 0.05, 0]
+  const getIngredientPosition = (ingredient: string, index: number): [number, number, number] => {
+    // Toppings get scattered positions on top of the pizza
+    const toppings = ['mushrooms', 'peppers', 'olives', 'basil'];
+    
+    if (toppings.includes(ingredient)) {
+      const toppingIndex = selectedIngredients.filter(ing => ing === ingredient).indexOf(ingredient);
+      const angle = (toppingIndex * 137.5) % 360; // Golden angle for natural distribution
+      const radius = 0.3 + Math.sin(toppingIndex) * 0.4;
+      const x = Math.cos(angle * Math.PI / 180) * radius;
+      const z = Math.sin(angle * Math.PI / 180) * radius;
+      return [x, -0.15, z]; // Fixed height on top of pizza
+    }
+    
+    // Base layers stack normally
+    const layerPositions: Record<string, [number, number, number]> = {
+      'dough': [0, -0.4, 0],
+      'sauce': [0, -0.35, 0],
+      'cheese': [0, -0.3, 0],
+      'pepperoni': [0, -0.25, 0]
     };
-    return positions[ingredient] || [0, -0.4 + index * 0.05, 0];
+    
+    return layerPositions[ingredient] || [0, -0.4 + index * 0.05, 0];
   };
 
   return (
     <group ref={groupRef} position={[0, -1, 0]}>
-      {ingredients.map((ingredient, index) => (
-        <mesh
-          key={`${ingredient}-${index}`}
-          position={getIngredientPosition(ingredient, index)}
-          onClick={() => onIngredientClick?.(ingredient)}
-          onPointerOver={() => setHovered(ingredient)}
-          onPointerOut={() => setHovered(null)}
-          scale={hovered === ingredient ? 1.1 : 1}
-          castShadow
-          receiveShadow
-        >
-          {ingredient === 'dough' ? (
-            <cylinderGeometry args={[1.5, 1.5, 0.15, 32]} />
-          ) : ingredient === 'sauce' ? (
-            <cylinderGeometry args={[1.4, 1.4, 0.03, 32]} />
-          ) : ingredient === 'cheese' ? (
-            <cylinderGeometry args={[1.4, 1.4, 0.04, 32]} />
-          ) : (
-            <cylinderGeometry args={[1.3, 1.3, 0.02, 32]} />
-          )}
+      {selectedIngredients.map((ingredient, index) => {
+        const toppings = ['mushrooms', 'peppers', 'olives', 'basil'];
+        const isTopping = toppings.includes(ingredient);
+        
+        return (
+          <mesh
+            key={`${ingredient}-${index}`}
+            position={getIngredientPosition(ingredient, index)}
+            onClick={() => onIngredientClick?.(ingredient)}
+            onPointerOver={() => setHovered(ingredient)}
+            onPointerOut={() => setHovered(null)}
+            scale={hovered === ingredient ? 1.1 : 1}
+            castShadow
+            receiveShadow
+          >
+            {ingredient === 'dough' ? (
+              <cylinderGeometry args={[1.5, 1.5, 0.15, 32]} />
+            ) : ingredient === 'sauce' ? (
+              <cylinderGeometry args={[1.4, 1.4, 0.03, 32]} />
+            ) : ingredient === 'cheese' ? (
+              <cylinderGeometry args={[1.4, 1.4, 0.04, 32]} />
+            ) : ingredient === 'pepperoni' ? (
+              <cylinderGeometry args={[1.3, 1.3, 0.02, 32]} />
+            ) : isTopping ? (
+              // Smaller, more realistic topping shapes
+              ingredient === 'mushrooms' ? (
+                <sphereGeometry args={[0.08, 8, 6]} />
+              ) : ingredient === 'peppers' ? (
+                <boxGeometry args={[0.12, 0.04, 0.08]} />
+              ) : ingredient === 'olives' ? (
+                <sphereGeometry args={[0.05, 8, 6]} />
+              ) : ingredient === 'basil' ? (
+                <boxGeometry args={[0.06, 0.01, 0.1]} />
+              ) : (
+                <sphereGeometry args={[0.06, 8, 6]} />
+              )
+            ) : (
+              <cylinderGeometry args={[1.3, 1.3, 0.02, 32]} />
+            )}
           <meshStandardMaterial 
             color={getIngredientColor(ingredient)} 
             transparent
             opacity={hovered === ingredient ? 0.9 : 0.8}
-          />
-        </mesh>
-      ))}
+            />
+          </mesh>
+        );
+      })}
       
       {/* Base plate */}
       <mesh position={[0, -0.8, 0]} receiveShadow>
