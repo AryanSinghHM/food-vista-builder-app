@@ -21,20 +21,20 @@ interface IngredientPanelProps {
 }
 
 const availableIngredients: Ingredient[] = [
-  { id: 'bun', name: 'Sesame Bun', category: 'Base', price: 0, emoji: '🍞' },
-  { id: 'meat', name: 'Beef Patty', category: 'Protein', price: 3.50, emoji: '🥩' },
-  { id: 'cheese', name: 'Cheddar Cheese', category: 'Dairy', price: 1.00, emoji: '🧀' },
-  { id: 'lettuce', name: 'Fresh Lettuce', category: 'Vegetables', price: 0.50, emoji: '🥬' },
-  { id: 'tomato', name: 'Ripe Tomato', category: 'Vegetables', price: 0.75, emoji: '🍅' },
-  { id: 'onion', name: 'White Onion', category: 'Vegetables', price: 0.50, emoji: '🧅' },
-  { id: 'pickle', name: 'Dill Pickles', category: 'Condiments', price: 0.25, emoji: '🥒' },
-  { id: 'sauce', name: 'Special Sauce', category: 'Condiments', price: 0.50, emoji: '🥫' },
+  { id: 'dough', name: 'Pizza Dough', category: 'Base', price: 0, emoji: '🍕' },
+  { id: 'sauce', name: 'Tomato Sauce', category: 'Base', price: 0.50, emoji: '🍅' },
+  { id: 'cheese', name: 'Mozzarella', category: 'Cheese', price: 1.50, emoji: '🧀' },
+  { id: 'pepperoni', name: 'Pepperoni', category: 'Meat', price: 2.00, emoji: '🍖' },
+  { id: 'mushrooms', name: 'Mushrooms', category: 'Vegetables', price: 1.00, emoji: '🍄' },
+  { id: 'peppers', name: 'Bell Peppers', category: 'Vegetables', price: 0.75, emoji: '🫑' },
+  { id: 'olives', name: 'Black Olives', category: 'Vegetables', price: 0.50, emoji: '🫒' },
+  { id: 'basil', name: 'Fresh Basil', category: 'Herbs', price: 0.25, emoji: '🌿' },
 ];
 
 export const IngredientPanel = ({ selectedIngredients, onIngredientToggle, onIngredientRemove, onAddToCart }: IngredientPanelProps) => {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
 
-  const categories = ['Base', 'Protein', 'Dairy', 'Vegetables', 'Condiments'];
+  const categories = ['Base', 'Cheese', 'Meat', 'Vegetables', 'Herbs'];
 
   const getIngredientQuantity = (ingredientId: string) => {
     return selectedIngredients.filter(id => id === ingredientId).length;
@@ -58,7 +58,7 @@ export const IngredientPanel = ({ selectedIngredients, onIngredientToggle, onIng
       <Card className="shadow-food">
         <CardHeader>
           <CardTitle className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            Customize Your Burger
+            Customize Your Pizza
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -120,7 +120,7 @@ export const IngredientPanel = ({ selectedIngredients, onIngredientToggle, onIng
                   })}
               </div>
               
-              {category !== 'Condiments' && <Separator />}
+              {category !== 'Herbs' && <Separator />}
             </div>
           ))}
         </CardContent>

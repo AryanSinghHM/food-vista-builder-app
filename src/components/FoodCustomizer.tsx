@@ -6,12 +6,12 @@ import { toast } from 'sonner';
 
 export const FoodCustomizer = () => {
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([
-    'bun', 'meat', 'cheese', 'lettuce', 'tomato', 'bun'
+    'dough', 'sauce', 'cheese', 'pepperoni', 'mushrooms'
   ]);
 
   const handleIngredientToggle = (ingredient: string) => {
     setSelectedIngredients(prev => [...prev, ingredient]);
-    toast(`Added ${ingredient} to your burger!`, {
+    toast(`Added ${ingredient} to your pizza!`, {
       description: "Watch the 3D model update in real-time",
     });
   };
@@ -26,7 +26,7 @@ export const FoodCustomizer = () => {
       }
       return prev;
     });
-    toast(`Removed ${ingredient} from your burger!`, {
+    toast(`Removed ${ingredient} from your pizza!`, {
       description: "See the change in your 3D model",
     });
   };
@@ -41,7 +41,7 @@ export const FoodCustomizer = () => {
 
   const handleAddToCart = () => {
     toast.success("Added to cart!", {
-      description: `Custom burger with ${selectedIngredients.length} ingredients`,
+      description: `Custom pizza with ${selectedIngredients.length} ingredients`,
     });
   };
 
