@@ -36,12 +36,14 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
     const toppings = ['mushrooms', 'peppers', 'olives', 'basil'];
     
     if (toppings.includes(ingredient)) {
-      const toppingIndex = selectedIngredients.filter(ing => ing === ingredient).indexOf(ingredient);
-      const angle = (toppingIndex * 137.5) % 360; // Golden angle for natural distribution
-      const radius = 0.3 + Math.sin(toppingIndex) * 0.4;
+      // Create random positions for each topping instance
+      const seed = ingredient.charCodeAt(0) + index * 7; // Deterministic but varied seed
+      const angle = (seed * 43.7) % 360; // Random angle
+      const radius = 0.2 + (Math.sin(seed) * 0.5 + 0.5) * 0.8; // Random radius between 0.2 and 1.0
       const x = Math.cos(angle * Math.PI / 180) * radius;
       const z = Math.sin(angle * Math.PI / 180) * radius;
-      return [x, -0.15, z]; // Fixed height on top of pizza
+      const yVariation = Math.sin(seed * 1.3) * 0.02; // Slight height variation
+      return [x, -0.15 + yVariation, z];
     }
     
     // Base layers stack normally
