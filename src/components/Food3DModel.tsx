@@ -68,8 +68,8 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
       const isTopping = toppings.includes(ingredient);
       
       if (isTopping && count > 0) {
-        // Generate 6-7 pieces per serving for toppings
-        const piecesPerServing = 6 + Math.floor(Math.random() * 2); // 6 or 7 pieces
+        // Generate 10-15 pieces per serving for toppings
+        const piecesPerServing = 10 + Math.floor(Math.random() * 6); // 10 to 15 pieces
         const totalPieces = count * piecesPerServing;
         
         for (let i = 0; i < totalPieces; i++) {
@@ -129,14 +129,17 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
               {ingredient === 'dough' ? (
                 <cylinderGeometry args={[1.5, 1.5, 0.15, 32]} />
               ) : ingredient === 'sauce' ? (
-                <cylinderGeometry args={[1.4, 1.4, 0.03, 32]} />
+                // Liquid-like sauce with irregular surface
+                <cylinderGeometry args={[1.35, 1.4, 0.015, 32]} />
               ) : (
                 <cylinderGeometry args={[1.3, 1.3, 0.02, 32]} />
               )}
               <meshStandardMaterial 
                 color={getIngredientColor(ingredient)} 
                 transparent
-                opacity={hovered === ingredient ? 0.9 : 0.8}
+                opacity={ingredient === 'sauce' ? 0.85 : (hovered === ingredient ? 0.9 : 0.8)}
+                roughness={ingredient === 'sauce' ? 0.1 : 0.5}
+                metalness={ingredient === 'sauce' ? 0.2 : 0}
               />
             </mesh>
           );
