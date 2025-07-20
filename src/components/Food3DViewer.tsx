@@ -9,7 +9,7 @@ interface Food3DViewerProps {
 
 export const Food3DViewer = ({ ingredients, onIngredientClick }: Food3DViewerProps) => {
   return (
-    <div className="w-full h-full bg-gradient-to-br from-card to-secondary rounded-xl overflow-hidden shadow-food">
+    <div className="w-full h-full rounded-xl overflow-hidden shadow-food" style={{ background: '#F1C40F' }}>
       <Canvas
         camera={{ position: [0, 2, 5], fov: 50 }}
         shadows

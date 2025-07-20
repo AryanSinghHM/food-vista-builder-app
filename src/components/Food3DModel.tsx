@@ -20,7 +20,7 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
   const getIngredientColor = (ingredient: string) => {
     const colors: Record<string, string> = {
       'dough': '#F5E6D3', // Light cream/beige color for realistic dough
-      'sauce': '#C0392B', // Rich red tomato sauce color
+      'sauce': '#E74C3C', // Bright red tomato sauce color
       'cheese': '#F1C40F',
       'pepperoni': '#8B0000',
       'mushrooms': '#8B4513',

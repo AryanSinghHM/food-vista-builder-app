@@ -71,29 +71,8 @@ export const FoodCustomizer = () => {
               </CardContent>
             </Card>
 
-            {/* Info Cards */}
-            <div className="grid grid-cols-2 gap-4">
-              <Card className="shadow-food">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-food-primary">
-                    {selectedIngredients.length}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    Ingredients
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="shadow-food">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-food-secondary">
-                    3D
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    Live Preview
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+            {/* Nutrition Information */}
+            <CalorieCalculator ingredients={selectedIngredients} />
           </div>
 
           {/* Right Sidebar */}
@@ -105,9 +84,6 @@ export const FoodCustomizer = () => {
               onIngredientRemove={handleIngredientRemove}
               onAddToCart={handleAddToCart}
             />
-            
-            {/* Calorie Calculator */}
-            <CalorieCalculator ingredients={selectedIngredients} />
           </div>
         </div>
       </div>
