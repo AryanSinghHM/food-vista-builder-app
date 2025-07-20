@@ -32,8 +32,7 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
   };
 
   const getIngredientPosition = (ingredient: string, index: number): [number, number, number] => {
-    // Toppings get scattered positions on top of the pizza
-    const toppings = ['mushrooms', 'peppers', 'olives', 'basil'];
+    const toppings = ['mushrooms', 'peppers', 'olives', 'basil', 'pepperoni'];
     
     if (toppings.includes(ingredient)) {
       // Create random positions for each topping instance
@@ -60,7 +59,7 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
   return (
     <group ref={groupRef} position={[0, -1, 0]}>
       {selectedIngredients.map((ingredient, index) => {
-        const toppings = ['mushrooms', 'peppers', 'olives', 'basil'];
+        const toppings = ['mushrooms', 'peppers', 'olives', 'basil', 'pepperoni'];
         const isTopping = toppings.includes(ingredient);
         
         return (
@@ -83,15 +82,20 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
             ) : ingredient === 'pepperoni' ? (
               <cylinderGeometry args={[1.3, 1.3, 0.02, 32]} />
             ) : isTopping ? (
-              // Smaller, more realistic topping shapes
+              // More realistic topping shapes
               ingredient === 'mushrooms' ? (
-                <sphereGeometry args={[0.08, 8, 6]} />
+                // Flat sliced mushroom shape
+                <cylinderGeometry args={[0.15, 0.12, 0.03, 12]} />
               ) : ingredient === 'peppers' ? (
                 <boxGeometry args={[0.12, 0.04, 0.08]} />
               ) : ingredient === 'olives' ? (
-                <sphereGeometry args={[0.05, 8, 6]} />
+                // Sliced olive shape (oval and flat)
+                <cylinderGeometry args={[0.08, 0.06, 0.02, 8]} />
               ) : ingredient === 'basil' ? (
                 <boxGeometry args={[0.06, 0.01, 0.1]} />
+              ) : ingredient === 'pepperoni' ? (
+                // Round flat pepperoni slice
+                <cylinderGeometry args={[0.12, 0.12, 0.02, 16]} />
               ) : (
                 <sphereGeometry args={[0.06, 8, 6]} />
               )
