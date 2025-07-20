@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CalorieCalculator } from './CalorieCalculator';
 import { Food3DViewer } from './Food3DViewer';
 import { IngredientPanel } from './IngredientPanel';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -54,10 +55,10 @@ export const FoodCustomizer = () => {
             <Card className="shadow-food border-0">
               <CardHeader>
                 <CardTitle className="text-xl font-bold text-center">
-                  🍔 Interactive 3D Food Model
+                  🍕 Interactive 3D Pizza Model
                 </CardTitle>
                 <p className="text-center text-muted-foreground">
-                  Rotate, zoom, and click on ingredients to explore your custom creation
+                  Rotate, zoom, and click on ingredients to explore your custom pizza
                 </p>
               </CardHeader>
               <CardContent className="p-6">
@@ -95,14 +96,18 @@ export const FoodCustomizer = () => {
             </div>
           </div>
 
-          {/* Ingredient Panel */}
-          <div>
+          {/* Right Sidebar */}
+          <div className="space-y-6">
+            {/* Ingredient Panel */}
             <IngredientPanel
               selectedIngredients={selectedIngredients}
               onIngredientToggle={handleIngredientToggle}
               onIngredientRemove={handleIngredientRemove}
               onAddToCart={handleAddToCart}
             />
+            
+            {/* Calorie Calculator */}
+            <CalorieCalculator ingredients={selectedIngredients} />
           </div>
         </div>
       </div>
