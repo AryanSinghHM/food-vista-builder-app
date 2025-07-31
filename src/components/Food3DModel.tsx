@@ -19,8 +19,8 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
 
   const getIngredientColor = (ingredient: string) => {
     const colors: Record<string, string> = {
-      'dough': '#F5E6D3', // Light cream/beige color for realistic dough
-      'sauce': '#D32F2F', // Deep red tomato sauce color
+      'dough': "#f29c2e", // Light cream/beige color for realistic dough
+      'sauce': "#fa5555", // Deep red tomato sauce color
       'cheese': '#F1C40F',
       'pepperoni': '#8B0000',
       'mushrooms': '#8B4513',
@@ -48,7 +48,7 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
     // Layer order: dough (bottom), sauce (middle), toppings (top)
     const layerPositions: Record<string, [number, number, number]> = {
       'dough': [0, -0.4, 0],      // Bottom layer
-      'sauce': [0, -0.35, 0]      // Middle layer
+      'sauce': [0, -0.32, 0]      // Middle layer
     };
     
     return layerPositions[ingredient] || [0, -0.4 + index * 0.05, 0];
