@@ -42,13 +42,13 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
       const x = Math.cos(angle * Math.PI / 180) * radius;
       const z = Math.sin(angle * Math.PI / 180) * radius;
       const yVariation = Math.sin(seed * 1.3) * 0.02; // Slight height variation
-      return [x, -0.3 + yVariation, z]; // Toppings above sauce
+      return [x, -0.2 + yVariation, z]; // Toppings below sauce
     }
     
-    // Base layers stack properly: dough bottom, sauce on top of dough, toppings on top of sauce
+    // Sauce at the top, dough at the bottom
     const layerPositions: Record<string, [number, number, number]> = {
       'dough': [0, -0.4, 0],      // Bottom layer
-      'sauce': [0, -0.37, 0]      // On top of dough, below toppings
+      'sauce': [0, -0.15, 0]      // Top layer
     };
     
     return layerPositions[ingredient] || [0, -0.4 + index * 0.05, 0];
