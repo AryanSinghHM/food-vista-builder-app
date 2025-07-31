@@ -20,7 +20,7 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
   const getIngredientColor = (ingredient: string) => {
     const colors: Record<string, string> = {
       'dough': '#F5E6D3', // Light cream/beige color for realistic dough
-      'sauce': '#E74C3C', // Bright red tomato sauce color
+      'sauce': '#D32F2F', // Deep red tomato sauce color
       'cheese': '#F1C40F',
       'pepperoni': '#8B0000',
       'mushrooms': '#8B4513',
@@ -137,9 +137,11 @@ export const Food3DModel = ({ ingredients: selectedIngredients, onIngredientClic
               <meshStandardMaterial 
                 color={getIngredientColor(ingredient)} 
                 transparent
-                opacity={ingredient === 'sauce' ? 0.85 : (hovered === ingredient ? 0.9 : 0.8)}
-                roughness={ingredient === 'sauce' ? 0.1 : 0.5}
-                metalness={ingredient === 'sauce' ? 0.2 : 0}
+                opacity={ingredient === 'sauce' ? 0.9 : (hovered === ingredient ? 0.9 : 0.8)}
+                roughness={ingredient === 'sauce' ? 0.05 : 0.5}
+                metalness={ingredient === 'sauce' ? 0.4 : 0}
+                emissive={ingredient === 'sauce' ? '#330000' : '#000000'}
+                emissiveIntensity={ingredient === 'sauce' ? 0.1 : 0}
               />
             </mesh>
           );
